@@ -1,23 +1,8 @@
 {
 	"name": "@nanoi18n/nanoi18n",
-	"version": "0.1.0",
-	"author": "Eric Vera",
-	"license": "MIT",
-	"repository": "nanoi18n/nanoi18n",
+	"version": "0.1.1",
 	"sideEffects": "false",
 	"type": "module",
-	"engines": {
-		"node": "^18 || >=20"
-	},
-	"exports": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"keywords": [
-		"i18n",
-		"l10n",
-		"typed",
-		"internationalization",
-		"localization"
-	],
 	"scripts": {
 		"build": "tsc --build",
 		"clean": "tsc --build --clean",
@@ -32,6 +17,24 @@
 		"prettier": "^3.1.0",
 		"typescript": "^5.3.2"
 	},
+	"exports": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"engines": {
+		"node": "^18 || >=20"
+	},
+	"author": "Eric Vera",
+	"license": "MIT",
+	"repository": "nanoi18n/nanoi18n",
+	"keywords": [
+		"i18n",
+		"l10n",
+		"typed",
+		"internationalization",
+		"localization"
+	],
 	"prettier": {
 		"semi": false,
 		"useTabs": true,
