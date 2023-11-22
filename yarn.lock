@@ -79,6 +79,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nanoi18n/nanoi18n@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@nanoi18n/nanoi18n@workspace:."
+  dependencies:
+    "@typescript-eslint/eslint-plugin": "npm:^6.12.0"
+    "@typescript-eslint/parser": "npm:^6.12.0"
+    eslint: "npm:^8.54.0"
+    prettier: "npm:^3.1.0"
+    typescript: "npm:^5.3.2"
+  languageName: unknown
+  linkType: soft
+
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -889,18 +901,6 @@ __metadata:
   checksum: a437714e2f90dbf881b5191d35a6db792efbca5badf112f87b9e1c712aace4b4b9b742dd6537f3edf90fd6f684de897cec230abde57e87883766712ddda297cc
   languageName: node
   linkType: hard
-
-"nanoi18n@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "nanoi18n@workspace:."
-  dependencies:
-    "@typescript-eslint/eslint-plugin": "npm:^6.12.0"
-    "@typescript-eslint/parser": "npm:^6.12.0"
-    eslint: "npm:^8.54.0"
-    prettier: "npm:^3.1.0"
-    typescript: "npm:^5.3.2"
-  languageName: unknown
-  linkType: soft
 
 "natural-compare@npm:^1.4.0":
   version: 1.4.0
