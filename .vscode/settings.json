@@ -1,0 +1,15 @@
+{
+	"files.autoSave": "afterDelay",
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSave": true,
+	"search.exclude": {
+		"**/.yarn": true,
+		"**/.pnp.*": true
+	},
+	"typescript.enablePromptUseWorkspaceTsdk": true,
+	"todo-tree.filtering.excludeGlobs": ["**/.pnp.js", "**/.pnp.cjs", "**/*.md"],
+	"prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
+	"editor.insertSpaces": false,
+	"editor.comments.insertSpace": false,
+	"editor.detectIndentation": false
+}
