@@ -7,3 +7,4 @@ tsconfig.json
 .yarn*
 .prettierrc
 .vscode/
+.eslint*
