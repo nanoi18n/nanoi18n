@@ -1,6 +1,6 @@
 {
 	"name": "@nanoi18n/core",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"sideEffects": false,
 	"type": "module",
 	"scripts": {
@@ -27,7 +27,10 @@
 	},
 	"author": "Eric Vera",
 	"license": "MIT",
-	"repository": "nanoi18n/nanoi18n",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/nanoi18n/nanoi18n-core"
+	},
 	"keywords": [
 		"i18n",
 		"l10n",
@@ -35,6 +38,9 @@
 		"internationalization",
 		"localization"
 	],
+	"publishConfig": {
+		"access": "public"
+	},
 	"prettier": {
 		"semi": false,
 		"useTabs": true,
