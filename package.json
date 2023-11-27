@@ -1,12 +1,13 @@
 {
 	"name": "@nanoi18n/core",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"sideEffects": false,
 	"type": "module",
 	"scripts": {
 		"build": "tsc --build",
 		"clean": "tsc --build --clean",
-		"lint": "eslint ."
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write ."
 	},
 	"devDependencies": {
 		"@typescript-eslint/eslint-plugin": "^6.12.0",
