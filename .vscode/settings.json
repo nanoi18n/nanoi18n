@@ -3,13 +3,18 @@
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.formatOnSave": true,
 	"search.exclude": {
-		"**/.yarn": true,
-		"**/.pnp.*": true
+		"node_modules": true
 	},
 	"typescript.enablePromptUseWorkspaceTsdk": true,
-	"todo-tree.filtering.excludeGlobs": ["**/.pnp.js", "**/.pnp.cjs", "**/*.md"],
-	"prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
+	"todo-tree.filtering.excludeGlobs": ["node_modules"],
 	"editor.insertSpaces": false,
 	"editor.comments.insertSpace": false,
-	"editor.detectIndentation": false
+	"editor.detectIndentation": false,
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": true
+	},
+	"[svelte]": {
+		"editor.defaultFormatter": "svelte.svelte-vscode"
+	},
+	"svelte.enable-ts-plugin": true
 }
