@@ -42,10 +42,5 @@
 	"publishConfig": {
 		"access": "public"
 	},
-	"prettier": {
-		"semi": false,
-		"useTabs": true,
-		"singleQuote": true
-	},
 	"packageManager": "yarn@4.0.2"
 }
