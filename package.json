@@ -1,6 +1,6 @@
 {
-	"name": "@nanoi18n/nanoi18n",
-	"version": "0.1.2",
+	"name": "@nanoi18n/core",
+	"version": "0.1.0",
 	"sideEffects": false,
 	"type": "module",
 	"scripts": {

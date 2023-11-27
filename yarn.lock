@@ -79,9 +79,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nanoi18n/nanoi18n@workspace:.":
+"@nanoi18n/core@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@nanoi18n/nanoi18n@workspace:."
+  resolution: "@nanoi18n/core@workspace:."
   dependencies:
     "@typescript-eslint/eslint-plugin": "npm:^6.12.0"
     "@typescript-eslint/parser": "npm:^6.12.0"
