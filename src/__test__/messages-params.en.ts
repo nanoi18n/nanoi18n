@@ -3,6 +3,6 @@ export const messages = {
 	'component.hello': ({ humanName }: Readonly<{ humanName: string }>): string =>
 		`Hello ${humanName}`,
 	'component.goodbye': ({
-		humanName,
-	}: Readonly<{ humanName: string }>): string => `Bye ${humanName}`,
+		humanLastName,
+	}: Readonly<{ humanLastName: string }>): string => `Bye ${humanLastName}`,
 }

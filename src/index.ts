@@ -1,20 +1,22 @@
 import { getI18NFunction } from './getI18NFunction.js'
-import type { MessagesBase, MessagesImporter } from './types.js'
+import type {
+	NanoI18NImporters,
+	NanoI18NMessages,
+	NanoI18NTranslationFunctionParams,
+} from './types.js'
 
-export type { MessagesImporter }
+export type { NanoI18NImporters }
 
 export const load = async <
 	TLocale extends string,
-	TMessages extends MessagesBase,
+	TMessages extends NanoI18NMessages<TMessages>,
 >(
 	locale: TLocale,
-	importers: Record<TLocale, MessagesImporter<TMessages>>,
+	importers: NanoI18NImporters<TLocale, TMessages>,
 ): Promise<
 	<TKey extends keyof TMessages>(
 		key: TKey,
-		params: Readonly<Record<string, string>>,
-		// TODO: Uncomment when working on messages with params
-		//...params: TranslationFunctionParams<TMessages, TKey>
+		...params: Readonly<NanoI18NTranslationFunctionParams<TMessages, TKey>>
 	) => string
 > => {
 	if (typeof importers[locale] === 'undefined') {

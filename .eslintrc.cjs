@@ -23,7 +23,7 @@ module.exports = {
 		sourceType: 'module',
 		project: 'tsconfig.json',
 	},
-	ignorePatterns: ['.eslintrc.cjs', 'dist'],
+	ignorePatterns: ['.eslintrc.cjs', 'dist', 'coverage'],
 	overrides: [
 		{
 			files: ['*.test.ts'],
