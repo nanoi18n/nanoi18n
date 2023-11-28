@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest'
+import { assertType, expect, test } from 'vitest'
 import type { messages as enMixedParams } from './__test__/messages-mixed-params.en.js'
 import type { messages as esMixedParams } from './__test__/messages-mixed-params.es.js'
 import type { messages as enNoParams } from './__test__/messages-no-params.en.js'
@@ -61,6 +61,14 @@ test('loads', async () => {
 	const t = await tPromise
 
 	const result = t('component.goodbye', { humanLastName: 'Yo' })
+	// This should have a type error for the param key k
+
+	// @ts-expect-error Expect TS to complain about k to not be a valid parameter
+	assertType(t('component.goodbye', { k: 'Yo' }))
+	// @ts-expect-error Expect TS to complain about missing params
+	assertType(t('component.goodbye'))
+	// @ts-expect-error Expect TS to complain about unexpected param k even when expected is provided
+	assertType(t('component.goodbye', { humanLastName: 'Yo', k: 'Yo' }))
 
 	expect(result).toMatchInlineSnapshot('"Bye Yo"')
 })
