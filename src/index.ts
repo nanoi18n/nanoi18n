@@ -1,22 +1,22 @@
-import { getI18NFunction } from './getI18NFunction.js'
+import { getL10nFunction } from './getL10nFunction.js'
 import type {
-	NanoI18NImporters,
-	NanoI18NMessages,
-	NanoI18NTranslationFunctionParams,
+	NanoI18nL10nFunctionParams,
+	NanoI18nL10nImporters,
+	NanoI18nL10nMessages,
 } from './types.js'
 
-export type { NanoI18NImporters }
+export type { NanoI18nL10nImporters }
 
-export const load = async <
+export const loadL10n = async <
 	TLocale extends string,
-	TMessages extends NanoI18NMessages<TMessages>,
+	TMessages extends NanoI18nL10nMessages<TMessages>,
 >(
 	locale: TLocale,
-	importers: NanoI18NImporters<TLocale, TMessages>,
+	importers: NanoI18nL10nImporters<TLocale, TMessages>,
 ): Promise<
 	<TKey extends keyof TMessages>(
 		key: TKey,
-		...params: Readonly<NanoI18NTranslationFunctionParams<TMessages, TKey>>
+		...params: Readonly<NanoI18nL10nFunctionParams<TMessages, TKey>>
 	) => string
 > => {
 	if (typeof importers[locale] === 'undefined') {
@@ -27,5 +27,5 @@ export const load = async <
 
 	const messages = await importers[locale]()
 
-	return getI18NFunction(locale, messages)
+	return getL10nFunction(locale, messages)
 }

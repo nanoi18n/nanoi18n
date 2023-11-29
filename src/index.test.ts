@@ -5,11 +5,10 @@ import type { messages as enNoParams } from './__test__/messages-no-params.en.js
 import type { messages as esNoParams } from './__test__/messages-no-params.es.js'
 import type { messages as enParams } from './__test__/messages-params.en.js'
 import type { messages as esParams } from './__test__/messages-params.es.js'
+import { loadL10n } from './index.js'
+import type { NanoI18nL10nImporters } from './types.js'
 
-import { load } from './index.js'
-import type { NanoI18NImporters } from './types.js'
-
-const importersWithNoParams: NanoI18NImporters<
+const importersWithNoParams: NanoI18nL10nImporters<
 	'en' | 'es',
 	typeof enNoParams,
 	typeof esNoParams
@@ -20,7 +19,7 @@ const importersWithNoParams: NanoI18NImporters<
 		(await import('./__test__/messages-no-params.es.js')).messages,
 }
 
-const importersWithParams: NanoI18NImporters<
+const importersWithParams: NanoI18nL10nImporters<
 	'en' | 'es',
 	typeof enParams,
 	typeof esParams
@@ -31,7 +30,7 @@ const importersWithParams: NanoI18NImporters<
 		(await import('./__test__/messages-params.es.js')).messages,
 }
 
-const importersWithMixedParams: NanoI18NImporters<
+const importersWithMixedParams: NanoI18nL10nImporters<
 	'en' | 'es',
 	typeof enMixedParams,
 	typeof esMixedParams
@@ -42,12 +41,8 @@ const importersWithMixedParams: NanoI18NImporters<
 		(await import('./__test__/messages-mixed-params.es.js')).messages,
 }
 
-test('loads', () => {
-	expect(load).not.toBeUndefined()
-})
-
-test('loads', async () => {
-	const tPromise = load('en', importersWithNoParams)
+test('loads i18n', async () => {
+	const tPromise = loadL10n('en', importersWithNoParams)
 
 	const t = await tPromise
 	const result = t('component.other-text')
@@ -56,7 +51,7 @@ test('loads', async () => {
 })
 
 test('loads', async () => {
-	const tPromise = load('en', importersWithParams)
+	const tPromise = loadL10n('en', importersWithParams)
 
 	const t = await tPromise
 
@@ -74,7 +69,7 @@ test('loads', async () => {
 })
 
 test('loads', async () => {
-	const tPromise = load('en', importersWithMixedParams)
+	const tPromise = loadL10n('en', importersWithMixedParams)
 
 	const t = await tPromise
 	const result = t('component.hello', { humanName: 'Yo' })
@@ -83,7 +78,7 @@ test('loads', async () => {
 })
 
 test('loads', async () => {
-	const tPromise = load('en', importersWithMixedParams)
+	const tPromise = loadL10n('en', importersWithMixedParams)
 
 	const t = await tPromise
 

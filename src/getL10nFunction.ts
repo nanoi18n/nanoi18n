@@ -1,12 +1,12 @@
 import type {
-	NanoI18NMessages,
-	NanoI18NTranslationFunctionParams,
+	NanoI18nL10nFunctionParams,
+	NanoI18nL10nMessages,
 } from './types.js'
 
-export const getI18NFunction =
+export const getL10nFunction =
 	<
 		TLocale extends string,
-		TMessages extends NanoI18NMessages<TMessages>,
+		TMessages extends NanoI18nL10nMessages<TMessages>,
 		TKey extends keyof TMessages = keyof TMessages,
 	>(
 		locale: TLocale,
@@ -14,7 +14,7 @@ export const getI18NFunction =
 	) =>
 	(
 		key: TKey,
-		...params: Readonly<NanoI18NTranslationFunctionParams<TMessages, TKey>>
+		...params: Readonly<NanoI18nL10nFunctionParams<TMessages, TKey>>
 	): string => {
 		const message = messages[key]
 
@@ -37,7 +37,7 @@ export const getI18NFunction =
 
 			return message(
 				...(params as [unknown] as [
-					NanoI18NTranslationFunctionParams<TMessages, TKey>,
+					NanoI18nL10nFunctionParams<TMessages, TKey>,
 				]),
 			)
 		}
