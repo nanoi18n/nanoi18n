@@ -6,14 +6,55 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+
+    # Only release if there is a fix or feature
+    if: ${{ contains(github.event.head_commit.message, 'fix:') || contains(github.event.head_commit.message, 'feat:') || contains(github.event.head_commit.message, 'fix!:') || contains(github.event.head_commit.message, 'feat!:') }}
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set Node version
+        uses: actions/setup-node@v3
         with:
           node-version: 20
-      - run: yarn
-      - run: yarn lint
-      - run: yarn build
-      - uses: JS-DevTools/npm-publish@v3
+
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Run Lint
+        run: yarn lint
+
+      - name: Run tests
+        run: yarn test
+
+      - name: Build
+        run: yarn build
+
+      # Increate the version (patch) and push a version tag
+      - run: git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - run: git config user.name "$GITHUB_ACTOR"
+
+      - name: Version Update (Major)
+        if: ${{ contains(github.event.head_commit.message, '!:') }}
+        run: >
+          npm version minor -m "ci: v%s [skip ci]"
+
+      - name: Version Update (Minor)
+        if: ${{ contains(github.event.head_commit.message, 'feat:') }}
+        run: >
+          npm version minor -m "ci: v%s [skip ci]"
+
+      - name: Version Update (Patch)
+        if: ${{ !contains(github.event.head_commit.message, '!:') && !contains(github.event.head_commit.message, 'feat:')  }}
+        run: >
+          npm version patch -m "ci: v%s [skip ci]"
+
+      - run: VERSION=$(node -p "require('./package.json').version")
+      - run: git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
+      - run: git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
+
+      - name: Publish to NPM
+        uses: JS-DevTools/npm-publish@v3
         with:
           token: ${{ secrets.NPM_TOKEN }}
