@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+
 export const messages = {
-	'component.text': 'Texto',
-	'component.other-text': 'Otro texto',
+	'a.0': 'a.0 es',
+	'a.1': 'a.1 es',
 }

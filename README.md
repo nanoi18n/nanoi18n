@@ -1,3 +1,3 @@
-# nanoi18n
+# nanoi18n-core
 
-Coming soon.
+// TODO: Add documentation

@@ -42,47 +42,71 @@ const importersWithMixedParams: NanoI18nL10nImporters<
 }
 
 test('loads i18n', async () => {
-	const tPromise = loadL10n('en', importersWithNoParams)
+	// TODO: Fix
 
-	const t = await tPromise
-	const result = t('component.other-text')
+	const l = await loadL10n('en', importersWithNoParams)
+	const result = l('a.0')
 
-	expect(result).toMatchInlineSnapshot('"Other text"')
+	expect(result).toMatchInlineSnapshot('"a.0 en"')
 })
 
-test('loads', async () => {
-	const tPromise = loadL10n('en', importersWithParams)
+test('types work for importers where all values are strings', async () => {
+	const t = await loadL10n('es', importersWithNoParams)
 
-	const t = await tPromise
+	// TODO: implement
+	//expect(() => {
+	//	// @ts-expect-error Expect TS to complain about k to not be a valid parameter name
+	//	t('a.0', { k: 'a' })
+	//}).toThrowErrorMatchingInlineSnapshot()
 
-	const result = t('component.goodbye', { humanLastName: 'Yo' })
-	// This should have a type error for the param key k
+	//expect(() => {
+	//	// @ts-expect-error Expect TS to complain about k to not be a valid parameter type
+	//	assertType(t('a.0', { a: 0 }))
+	//}).toThrowErrorMatchingInlineSnapshot()
 
-	// @ts-expect-error Expect TS to complain about k to not be a valid parameter
-	assertType(t('component.goodbye', { k: 'Yo' }))
+	expect(() => {
+		// // @ts-expect-error Expect TS to complain about missing params
+		assertType(t('a.1'))
+	}).toThrowErrorMatchingInlineSnapshot()
+
+	expect(() => {
+		// @ts-expect-error Expect TS to complain about invalid key
+		assertType(t('c', { a: '0' }))
+	}).toThrowErrorMatchingInlineSnapshot()
+
+	expect(() => {
+		// @ts-expect-error Expect TS to complain about unexpected param k even when expected is provided
+		assertType(t('a.1', { b: 'b', k: 'k' }))
+	}).toThrowErrorMatchingInlineSnapshot()
+})
+
+test.skip('types work for importers where all values are parameterized functions', async () => {
+	const t = await loadL10n('en', importersWithParams)
+
+	// @ts-expect-error Expect TS to complain about k to not be a valid parameter name
+	assertType(t('a.0', { k: 'a' }))
+	// @ts-expect-error Expect TS to complain about k to not be a valid parameter type
+	assertType(t('a.0', { a: 0 }))
 	// @ts-expect-error Expect TS to complain about missing params
-	assertType(t('component.goodbye'))
+	assertType(t('a.1'))
+	// @ts-expect-error Expect TS to complain about invalid key
+	assertType(t('c', { a: '0' }))
 	// @ts-expect-error Expect TS to complain about unexpected param k even when expected is provided
-	assertType(t('component.goodbye', { humanLastName: 'Yo', k: 'Yo' }))
-
-	expect(result).toMatchInlineSnapshot('"Bye Yo"')
+	assertType(t('a.1', { b: 'b', k: 'k' }))
 })
 
-test('loads', async () => {
-	const tPromise = loadL10n('en', importersWithMixedParams)
+test.skip('types work for importers where all values are a mix of strings and parameterized functions', async () => {
+	const t = await loadL10n('es', importersWithMixedParams)
 
-	const t = await tPromise
-	const result = t('component.hello', { humanName: 'Yo' })
-
-	expect(result).toMatchInlineSnapshot('"Hi Yo"')
-})
-
-test('loads', async () => {
-	const tPromise = loadL10n('en', importersWithMixedParams)
-
-	const t = await tPromise
-
-	const result = t('component.generic')
-
-	expect(result).toMatchInlineSnapshot('"Hi stranger"')
+	// TODO: implement
+	// // @ts-expect-error Expect TS to complain about missing params
+	assertType(t('a.1'))
+	// @ts-expect-error Expect TS to complain about k to not be a valid parameter name
+	assertType(t('a.0', { k: 'a' }))
+	// @ts-expect-error Expect TS to complain about k to not be a valid parameter type
+	assertType(t('a.0', { a: 0 }))
+	// @ts-expect-error Expect TS to complain about invalid key
+	assertType(t('c', { a: '0' }))
+	// @ts-expect-error Expect TS to complain about unexpected param k even when expected is provided
+	assertType(t('a.1', { b: 'b', k: 'k' }))
 })

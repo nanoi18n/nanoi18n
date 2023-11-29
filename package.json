@@ -8,7 +8,7 @@
 		"clean": "tsc --build --clean",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"test": "vitest run",
+		"test": "vitest --run",
 		"coverage": "vitest run --coverage"
 	},
 	"devDependencies": {
