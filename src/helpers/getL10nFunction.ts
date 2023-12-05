@@ -1,7 +1,7 @@
 import type {
 	NanoI18nL10nFunctionParams,
 	NanoI18nL10nMessages,
-} from './types.js'
+} from '../types.js'
 
 export const getL10nFunction =
 	<
