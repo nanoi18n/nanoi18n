@@ -7,6 +7,11 @@ jobs:
   publish:
     runs-on: ubuntu-latest
 
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
+
     # Only release if there is a fix or feature
     if: ${{ contains(github.event.head_commit.message, 'fix:') || contains(github.event.head_commit.message, 'feat:') || contains(github.event.head_commit.message, 'fix!:') || contains(github.event.head_commit.message, 'feat!:') }}
 
@@ -22,7 +27,7 @@ jobs:
       - name: Install Dependencies
         run: yarn
 
-      - name: Run Lint
+      - name: Lint
         run: yarn lint
 
       - name: Run tests
@@ -31,30 +36,25 @@ jobs:
       - name: Build
         run: yarn build
 
-      # Increate the version (patch) and push a version tag
-      - run: git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - run: git config user.name "$GITHUB_ACTOR"
-
-      - name: Version Update (Major)
-        if: ${{ contains(github.event.head_commit.message, '!:') }}
-        run: >
-          npm version minor -m "ci: v%s [skip ci]"
-
-      - name: Version Update (Minor)
-        if: ${{ contains(github.event.head_commit.message, 'feat:') }}
-        run: >
-          npm version minor -m "ci: v%s [skip ci]"
-
-      - name: Version Update (Patch)
-        if: ${{ !contains(github.event.head_commit.message, '!:') && !contains(github.event.head_commit.message, 'feat:')  }}
-        run: >
-          npm version patch -m "ci: v%s [skip ci]"
-
-      - run: VERSION=$(node -p "require('./package.json').version")
-      - run: git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
-      - run: git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
+      - name: Conventional Changelog Action
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v3
+        with:
+          # Do not generate the CHANGELOG.md. Changelog details will be included
+          # in the release notes.
+          output-file: 'false'
 
       - name: Publish to NPM
         uses: JS-DevTools/npm-publish@v3
         with:
           token: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1.12.0
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        with:
+          allowUpdates: true
+          draft: false
+          name: ${{ steps.changelog.outputs.tag }}
+          body: ${{ steps.changelog.outputs.clean_changelog }}
+          token: ${{ github.token }}
