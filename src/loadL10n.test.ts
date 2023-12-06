@@ -102,7 +102,7 @@ test('l function throws when there is no param and it is expected', async () => 
     // @ts-expect-error Expect TS to complain about missing params
     l('a.1')
   }).toThrowErrorMatchingInlineSnapshot(
-    "\"Params for key 'a.1' in locale 'es' unexpectedly not found.\"",
+    `[Error: Params for key 'a.1' in locale 'es' unexpectedly not found.]`,
   )
 })
 
@@ -113,7 +113,7 @@ test('l function throws when paramCheck is used and one of the params is undefin
     // @ts-expect-error the following expects a b attribute in params as string
     l('a.1', { c: 'I am c' })
   }).toThrowErrorMatchingInlineSnapshot(
-    '"Param unexpectedly has undefined value"',
+    `[Error: Param unexpectedly has undefined value]`,
   )
 })
 
@@ -132,7 +132,7 @@ test('l function throws when there is no message for specified key', async () =>
     // @ts-expect-error Expect TS to complain about invalid key
     l('c', { a: '0' })
   }).toThrowErrorMatchingInlineSnapshot(
-    "\"Message for key 'c' in locale 'en' unexpectedly has type 'undefined'.\"",
+    `[Error: Message for key 'c' in locale 'en' unexpectedly has type 'undefined'.]`,
   )
 })
 
@@ -141,7 +141,7 @@ test('l function throws when the requested locale is not included in the importe
     // @ts-expect-error Expect TS to complain about invalid key
     await loadL10n('fr', importersWithNoParams)
   }).rejects.toThrowErrorMatchingInlineSnapshot(
-    '"Requested locale \'fr\' not included in importers argument."',
+    `[Error: Requested locale 'fr' not included in importers argument.]`,
   )
 })
 

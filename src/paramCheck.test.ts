@@ -7,7 +7,7 @@ test('throws if only value is undefined', async () => {
   expect(() => {
     paramCheck([a], `a = ${a}`)
   }).toThrowErrorMatchingInlineSnapshot(
-    '"Param unexpectedly has undefined value"',
+    `[Error: Param unexpectedly has undefined value]`,
   )
 })
 
@@ -19,7 +19,7 @@ test('throws if any value is undefined', async () => {
   expect(() => {
     paramCheck([a, b, c], `a = ${a}, b = ${b}, a = ${c}`)
   }).toThrowErrorMatchingInlineSnapshot(
-    '"Param unexpectedly has undefined value"',
+    `[Error: Param unexpectedly has undefined value]`,
   )
 })
 
