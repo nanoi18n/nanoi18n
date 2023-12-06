@@ -1,20 +1,20 @@
 {
-	"files.autoSave": "afterDelay",
-	"editor.defaultFormatter": "esbenp.prettier-vscode",
-	"editor.formatOnSave": true,
-	"search.exclude": {
-		"node_modules": true
-	},
-	"typescript.enablePromptUseWorkspaceTsdk": true,
-	"todo-tree.filtering.excludeGlobs": ["node_modules"],
-	"editor.insertSpaces": false,
-	"editor.comments.insertSpace": false,
-	"editor.detectIndentation": false,
-	"editor.codeActionsOnSave": {
-		"source.organizeImports": true
-	},
-	"[svelte]": {
-		"editor.defaultFormatter": "svelte.svelte-vscode"
-	},
-	"svelte.enable-ts-plugin": true
+  "files.autoSave": "afterDelay",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "search.exclude": {
+    "node_modules": true
+  },
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "todo-tree.filtering.excludeGlobs": ["node_modules"],
+  "editor.insertSpaces": false,
+  "editor.comments.insertSpace": false,
+  "editor.detectIndentation": false,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
+  "svelte.enable-ts-plugin": true
 }
