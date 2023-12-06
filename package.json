@@ -10,7 +10,8 @@
     "format": "prettier --write .",
     "test": "vitest --run",
     "test:watch": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "smoke": "yarn build && yarn lint && yarn test"
   },
   "devDependencies": {
     "@types/node": "^20.10.3",
