@@ -55,5 +55,6 @@ jobs:
           allowUpdates: true
           draft: false
           name: ${{ steps.changelog.outputs.tag }}
+          tag: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
           token: ${{ github.token }}
