@@ -155,7 +155,7 @@ test('TS Errors happen on incorrect keys/parameters for importers (all values ar
   expect(() => {
     // @ts-expect-error Expect TS to complain about receiving params when none is expected
     l('a.0', { k: 'a' })
-  }).not.toThrow()
+  }).toThrowError()
 
   expect(() => {
     // @ts-expect-error Expect TS to complain about invalid key
@@ -226,5 +226,5 @@ test('TS Errors happen on incorrect keys/parameters for importers (mixed values 
   expect(() => {
     // @ts-expect-error Expect TS to complain about unexpected params
     l('a.1', { b: 'b' })
-  }).not.toThrow()
+  }).toThrowError()
 })

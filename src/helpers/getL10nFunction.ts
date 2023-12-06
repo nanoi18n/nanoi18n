@@ -19,15 +19,19 @@ export const getL10nFunction =
     const message = messages[key]
 
     if (typeof message === 'string') {
+      if (params.length !== 0) {
+        throw new Error(
+          `Params for key '${String(
+            key,
+          )}' in locale '${locale}' unexpectedly defined.`,
+        )
+      }
+
       return message
     }
 
     if (typeof message === 'function') {
-      if (
-        typeof params === 'undefined' ||
-        !Array.isArray(params) ||
-        params.length === 0
-      ) {
+      if (params.length === 0) {
         throw new Error(
           `Params for key '${String(
             key,
