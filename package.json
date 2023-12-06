@@ -1,54 +1,54 @@
 {
-	"name": "@nanoi18n/core",
-	"version": "0.1.2",
-	"sideEffects": false,
-	"type": "module",
-	"scripts": {
-		"build": "tsc --build",
-		"clean": "tsc --build --clean",
-		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write .",
-		"test": "vitest --run",
-		"test:watch": "vitest",
-		"coverage": "vitest run --coverage"
-	},
-	"devDependencies": {
-		"@typescript-eslint/eslint-plugin": "^6.13.1",
-		"@typescript-eslint/parser": "^6.13.1",
-		"@vitest/coverage-v8": "^0.34.6",
-		"eslint": "^8.54.0",
-		"eslint-config-prettier": "^9.0.0",
-		"eslint-import-resolver-typescript": "^3.6.1",
-		"eslint-plugin-import": "^2.29.0",
-		"prettier": "^3.1.0",
-		"typescript": "^5.3.2",
-		"vitest": "^0.34.6"
-	},
-	"exports": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"files": [
-		"dist",
-		"!*.test.*",
-		"!__test__"
-	],
-	"engines": {
-		"node": "^18 || >=20"
-	},
-	"author": "Eric Vera",
-	"license": "MIT",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/nanoi18n/nanoi18n-core"
-	},
-	"keywords": [
-		"i18n",
-		"l10n",
-		"typed",
-		"internationalization",
-		"localization"
-	],
-	"publishConfig": {
-		"access": "public"
-	},
-	"packageManager": "yarn@4.0.2"
+  "name": "@nanoi18n/core",
+  "version": "0.1.3",
+  "sideEffects": false,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
+    "lint": "prettier --check . && eslint .",
+    "format": "prettier --write .",
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@typescript-eslint/parser": "^6.13.1",
+    "@vitest/coverage-v8": "^0.34.6",
+    "eslint": "^8.54.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.0",
+    "prettier": "^3.1.0",
+    "typescript": "^5.3.2",
+    "vitest": "^0.34.6"
+  },
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "!*.test.*",
+    "!__test__"
+  ],
+  "engines": {
+    "node": "^18 || >=20"
+  },
+  "author": "Eric Vera",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nanoi18n/nanoi18n-core"
+  },
+  "keywords": [
+    "i18n",
+    "l10n",
+    "typed",
+    "internationalization",
+    "localization"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "packageManager": "yarn@4.0.2"
 }
