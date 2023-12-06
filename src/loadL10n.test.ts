@@ -3,6 +3,8 @@ import type { messages as enMixedParams } from './__test__/messages-mixed-params
 import type { messages as esMixedParams } from './__test__/messages-mixed-params.es.js'
 import type { messages as enNoParams } from './__test__/messages-no-params.en.js'
 import type { messages as esNoParams } from './__test__/messages-no-params.es.js'
+import type { messages as enParamsWithCheck } from './__test__/messages-params-with-check.en.js'
+import type { messages as esParamsWithCheck } from './__test__/messages-params-with-check.es.js'
 import type { messages as enParams } from './__test__/messages-params.en.js'
 import type { messages as esParams } from './__test__/messages-params.es.js'
 import { loadL10n } from './loadL10n.js'
@@ -28,6 +30,17 @@ const importersWithParams: NanoI18nL10nImporters<
     (await import('./__test__/messages-params.en.js')).messages,
   ['es']: async () =>
     (await import('./__test__/messages-params.es.js')).messages,
+}
+
+const importersWithParamsWithCheck: NanoI18nL10nImporters<
+  'en' | 'es',
+  typeof enParamsWithCheck,
+  typeof esParamsWithCheck
+> = {
+  ['en']: async () =>
+    (await import('./__test__/messages-params-with-check.en.js')).messages,
+  ['es']: async () =>
+    (await import('./__test__/messages-params-with-check.es.js')).messages,
 }
 
 const importersWithMixedParams: NanoI18nL10nImporters<
@@ -90,6 +103,25 @@ test('l function throws when there is no param and it is expected', async () => 
     l('a.1')
   }).toThrowErrorMatchingInlineSnapshot(
     "\"Params for key 'a.1' in locale 'es' unexpectedly not found.\"",
+  )
+})
+
+test('l function throws when paramCheck is used and one of the params is undefined', async () => {
+  const l = await loadL10n('es', importersWithParamsWithCheck)
+
+  expect(() => {
+    // @ts-expect-error the following expects a b attribute in params as string
+    l('a.1', { c: 'I am c' })
+  }).toThrowErrorMatchingInlineSnapshot(
+    '"Param unexpectedly has undefined value"',
+  )
+})
+
+test('l function works when paramCheck is used and there are no undefined params', async () => {
+  const l = await loadL10n('en', importersWithParamsWithCheck)
+
+  expect(l('a.1', { b: 'I am b', c: 'I am c' })).toMatchInlineSnapshot(
+    '"a.1 en: b = I am b, c = I am c"',
   )
 })
 
