@@ -40,14 +40,16 @@ jobs:
           # Do not generate the CHANGELOG.md. Changelog details will be included
           # in the release notes.
           output-file: 'false'
+          github-token: ${{ github.token }}
 
       - name: Publish to NPM
         uses: JS-DevTools/npm-publish@v3
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
         with:
           token: ${{ secrets.NPM_TOKEN }}
 
       - name: Create Release
-        uses: ncipollo/release-action@v1.12.0
+        uses: ncipollo/release-action@v1
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
         with:
           allowUpdates: true
