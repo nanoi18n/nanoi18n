@@ -11,6 +11,13 @@ export type NanoI18nL10nFunctionParams<
   TKey extends keyof TMessages,
 > = TMessages[TKey] extends (params: Readonly<infer P>) => string ? [P] : []
 
+export type NanoI18nL10nFunction<
+  TMessages extends NanoI18nL10nMessages<TMessages>,
+> = <TKey extends keyof TMessages = keyof TMessages>(
+  key: TKey,
+  ...params: Readonly<NanoI18nL10nFunctionParams<TMessages, TKey>>
+) => string
+
 export type NanoI18nL10nImporters<
   TLocales extends string,
   TMessages extends NanoI18nL10nMessages<TMessages>,
