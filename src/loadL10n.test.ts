@@ -7,8 +7,8 @@ import type { messages as enParamsWithCheck } from './__test__/messages-params-w
 import type { messages as esParamsWithCheck } from './__test__/messages-params-with-check.es.js'
 import type { messages as enParams } from './__test__/messages-params.en.js'
 import type { messages as esParams } from './__test__/messages-params.es.js'
-import { loadL10n } from './loadL10n.js'
-import type { NanoI18nL10nImporters } from './types.js'
+import type { NanoI18nL10nImporters } from './index.js'
+import { loadL10n } from './index.js'
 
 const importersWithNoParams: NanoI18nL10nImporters<
   'en' | 'es',
