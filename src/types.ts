@@ -13,7 +13,5 @@ export type NanoI18nL10nFunctionParams<
 
 export type NanoI18nL10nImporters<
   TLocales extends string,
-  T0 extends NanoI18nL10nMessages<T0>,
-  T1 extends NanoI18nL10nMessages<T1> = never,
-  T2 extends NanoI18nL10nMessages<T2> = never,
-> = Record<TLocales, () => Promise<NanoI18nL10nMessages<T0 | T1 | T2>>>
+  TMessages extends NanoI18nL10nMessages<TMessages>,
+> = Record<TLocales, () => Promise<NanoI18nL10nMessages<TMessages>>>

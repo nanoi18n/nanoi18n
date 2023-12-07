@@ -12,7 +12,7 @@ export const loadL10n = async <
   locale: TLocale,
   importers: NanoI18nL10nImporters<TLocale, TMessages>,
 ): Promise<
-  <TKey extends keyof TMessages>(
+  <TKey extends keyof TMessages = keyof TMessages>(
     key: TKey,
     ...params: Readonly<NanoI18nL10nFunctionParams<TMessages, TKey>>
   ) => string

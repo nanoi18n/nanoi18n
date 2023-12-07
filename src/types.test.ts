@@ -1,8 +1,6 @@
 import { expect, test } from 'vitest'
 import type { messages as enMixedParams } from './__test__/messages-mixed-params.en.js'
-import type { messages as esMixedParams } from './__test__/messages-mixed-params.es.js'
 import type { messages as enParams } from './__test__/messages-params.en.js'
-import type { messages as esParams } from './__test__/messages-params.es.js'
 import type { NanoI18nL10nImporters } from './index.js'
 import type {
   NanoI18nL10nFunctionParams,
@@ -10,11 +8,7 @@ import type {
 } from './types.js'
 
 test('NanoI18nL10nImporters results in no TS error when types match (multiple locales)', async () => {
-  const importers: NanoI18nL10nImporters<
-    'en' | 'es',
-    typeof enMixedParams,
-    typeof esMixedParams
-  > = {
+  const importers: NanoI18nL10nImporters<'en' | 'es', typeof enMixedParams> = {
     ['en']: async () =>
       (await import('./__test__/messages-mixed-params.en.js')).messages,
     ['es']: async () =>
@@ -36,11 +30,7 @@ test('NanoI18nL10nImporters results in no TS error when types match (single loca
 })
 
 test("NanoI18nL10nImporters results in TS error when key types don't match", async () => {
-  const importers: NanoI18nL10nImporters<
-    'en' | 'es',
-    typeof enParams,
-    typeof esParams
-  > = {
+  const importers: NanoI18nL10nImporters<'en' | 'es', typeof enParams> = {
     ['en']: async () =>
       // @ts-expect-error Expect TS to complain about property a.0 having mismatched types
       (await import('./__test__/messages-no-params.en.js')).messages,
@@ -57,11 +47,7 @@ test('NanoI18nL10nImporters results in TS error when there are more locales than
     EN = 'en',
   }
 
-  const importers: NanoI18nL10nImporters<
-    Locale,
-    typeof enParams,
-    typeof esParams
-  > = {
+  const importers: NanoI18nL10nImporters<Locale, typeof enParams> = {
     ['en']: async () =>
       (await import('./__test__/messages-params.en.js')).messages,
     // @ts-expect-error Expect error about 'es' not existing in type
@@ -81,11 +67,7 @@ test('NanoI18nL10nImporters results in TS error when locale in TLocale is missin
   }
 
   // @ts-expect-error Expect error about missing 'ps' locale in importers
-  const importers: NanoI18nL10nImporters<
-    Locale,
-    typeof enParams,
-    typeof esParams
-  > = {
+  const importers: NanoI18nL10nImporters<Locale, typeof enParams> = {
     ['en']: async () =>
       (await import('./__test__/messages-params.en.js')).messages,
     ['es']: async () =>

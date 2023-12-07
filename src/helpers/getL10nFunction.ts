@@ -4,15 +4,11 @@ import type {
 } from '../types.js'
 
 export const getL10nFunction =
-  <
-    TLocale extends string,
-    TMessages extends NanoI18nL10nMessages<TMessages>,
-    TKey extends keyof TMessages = keyof TMessages,
-  >(
+  <TLocale extends string, TMessages extends NanoI18nL10nMessages<TMessages>>(
     locale: TLocale,
     messages: TMessages,
   ) =>
-  (
+  <TKey extends keyof TMessages = keyof TMessages>(
     key: TKey,
     ...params: Readonly<NanoI18nL10nFunctionParams<TMessages, TKey>>
   ): string => {

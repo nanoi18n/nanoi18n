@@ -84,9 +84,8 @@ We will be adding support for:
    const importers: NanoI18nL10nImporters<
      // Supported localed (can be an enum)
      'en' | 'es',
-     // Types of messages (currently type supports up to 3)
-     typeof enMessages,
-     typeof esMessages
+     // Types of messages (ideally the base language used during development)
+     typeof enMessages
    > = {
      ['en']: async () => (await import('./messages.en.js')).messages,
      ['es']: async () => (await import('./messages.es.js')).messages,

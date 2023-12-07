@@ -2,18 +2,14 @@ import { expect, test } from 'vitest'
 import type { messages as enMixedParams } from './__test__/messages-mixed-params.en.js'
 import type { messages as esMixedParams } from './__test__/messages-mixed-params.es.js'
 import type { messages as enNoParams } from './__test__/messages-no-params.en.js'
-import type { messages as esNoParams } from './__test__/messages-no-params.es.js'
 import type { messages as enParamsWithCheck } from './__test__/messages-params-with-check.en.js'
-import type { messages as esParamsWithCheck } from './__test__/messages-params-with-check.es.js'
 import type { messages as enParams } from './__test__/messages-params.en.js'
-import type { messages as esParams } from './__test__/messages-params.es.js'
 import type { NanoI18nL10nImporters } from './index.js'
 import { loadL10n } from './index.js'
 
 const importersWithNoParams: NanoI18nL10nImporters<
   'en' | 'es',
-  typeof enNoParams,
-  typeof esNoParams
+  typeof enNoParams
 > = {
   ['en']: async () =>
     (await import('./__test__/messages-no-params.en.js')).messages,
@@ -21,21 +17,17 @@ const importersWithNoParams: NanoI18nL10nImporters<
     (await import('./__test__/messages-no-params.es.js')).messages,
 }
 
-const importersWithParams: NanoI18nL10nImporters<
-  'en' | 'es',
-  typeof enParams,
-  typeof esParams
-> = {
-  ['en']: async () =>
-    (await import('./__test__/messages-params.en.js')).messages,
-  ['es']: async () =>
-    (await import('./__test__/messages-params.es.js')).messages,
-}
+const importersWithParams: NanoI18nL10nImporters<'en' | 'es', typeof enParams> =
+  {
+    ['en']: async () =>
+      (await import('./__test__/messages-params.en.js')).messages,
+    ['es']: async () =>
+      (await import('./__test__/messages-params.es.js')).messages,
+  }
 
 const importersWithParamsWithCheck: NanoI18nL10nImporters<
   'en' | 'es',
-  typeof enParamsWithCheck,
-  typeof esParamsWithCheck
+  typeof enParamsWithCheck
 > = {
   ['en']: async () =>
     (await import('./__test__/messages-params-with-check.en.js')).messages,
@@ -45,8 +37,7 @@ const importersWithParamsWithCheck: NanoI18nL10nImporters<
 
 const importersWithMixedParams: NanoI18nL10nImporters<
   'en' | 'es',
-  typeof enMixedParams,
-  typeof esMixedParams
+  typeof enMixedParams
 > = {
   ['en']: async () =>
     (await import('./__test__/messages-mixed-params.en.js')).messages,

@@ -19,7 +19,6 @@ test('returns a function that can be used to extract localized messages (multipl
 
   const l = getL10nFunction('fr', messages)
 
-  // @ts-expect-error The type does not seem to work only for this internal function. For now ignoring it.
   expect(l('a.1', { a: "I'm a" })).toMatchInlineSnapshot(`"I'm a"`)
 })
 
@@ -30,6 +29,7 @@ test('throws when params are expected, but not received', async () => {
   })
 
   expect(() => {
+    // @ts-expect-error error as l expect function params
     l('a.1')
   }).toThrowErrorMatchingInlineSnapshot(
     `[Error: Params for key 'a.1' in locale 'fr' unexpectedly not found.]`,
