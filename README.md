@@ -30,7 +30,14 @@ NanoI18n was built with the following principles in mind:
 
 ## When not to use NanoI18n?
 
-- **Non TS/JS code bases** - NanoI18n is built to work with TS/JS. While tooling could be built to tranform the TS messages files into some other format supported by other languages, it is beyond the scope of this project.
+- **Non TS/JS code base** - NanoI18n is built to work with TS/JS. While tooling could be built to tranform the TS messages files into some other format supported by other languages, it is beyond the scope of this project.
+- **Project requires the framework to do the formatting** - Most I18n frameworks support the ICU format which use specially formatted messages in order to localize things like plurals, number formats, dates, etc. NanoI18n assumes that you will provide pre-formatted data to the parameterized messages.
+
+## Next work
+
+We will be adding support for:
+
+- **Plurals** - allows to choose a message based on a quantity associated with it.
 
 ## Usage
 
