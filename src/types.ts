@@ -1,24 +1,31 @@
-export type NanoI18nL10nMessages<
-  TMessages,
-  TKey extends keyof TMessages = keyof TMessages,
-  TMessage extends TMessages[TKey] extends infer P
-    ? P
-    : never = TMessages[TKey] extends infer P ? P : never,
-> = Record<TKey, TMessage>
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+/* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/naming-convention */
 
-export type NanoI18nL10nFunctionParams<
-  TMessages extends NanoI18nL10nMessages<TMessages>,
-  TKey extends keyof TMessages,
-> = TMessages[TKey] extends (params: Readonly<infer P>) => string ? [P] : []
-
-export type NanoI18nL10nFunction<
-  TMessages extends NanoI18nL10nMessages<TMessages>,
-> = <TKey extends keyof TMessages = keyof TMessages>(
-  key: TKey,
-  ...params: Readonly<NanoI18nL10nFunctionParams<TMessages, TKey>>
+export type NanoI18nL10nMessageFunction<TFn> = TFn extends (
+  ...args: infer P
 ) => string
+  ? P extends []
+    ? () => string
+    : P extends [Record<string, string>]
+      ? (param: P[0]) => string
+      : 'error-unexpected-params-format-message'
+  : 'error-unexpected-non-function-message'
+
+export type NanoI18nL10nMessages<
+  TMessages extends Record<TKey, TMessage>,
+  TKey extends keyof TMessages = keyof TMessages,
+  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+  TMessage extends NanoI18nL10nMessageFunction<
+    TMessages[TKey]
+  > = NanoI18nL10nMessageFunction<TMessages[TKey]>,
+> = TMessages
 
 export type NanoI18nL10nImporters<
   TLocales extends string,
-  TMessages extends NanoI18nL10nMessages<TMessages>,
+  TMessages extends Record<
+    keyof TMessages,
+    NanoI18nL10nMessageFunction<TMessages[keyof TMessages]>
+  >,
 > = Record<TLocales, () => Promise<NanoI18nL10nMessages<TMessages>>>

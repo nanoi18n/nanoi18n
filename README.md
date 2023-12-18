@@ -10,30 +10,19 @@
 
     EXPERIMENTAL: NanoI18n is currently in early development and we appreciate all constructive feedback.
 
-NanoI18n was built with the following principles in mind:
+NanoI18n is being built with the following goals in mind:
 
-- **Lightweight** - NanoI18n does not include any dependencies and has minimal functionality making it extremely light.
-- **Issues visible in editor** - Built on TypeScript to catch any issues as close to developer experience as possible.
-- **Flexible** - You get to choose where to locate your localized messages and when to load them,
-- **Self-contained** - Instead of using macros or CLI tools as part of the localization process, types (and eventually lint plugins) are used to ensure all strings are localized and the structure of the messages match across locales.
-
-## Supported Functionality
-
-- **Basic messages** - You select an id and a message
-  ```typescript
-  l('id')
-  ```
-- **Parameterized messages** - Pass some parameters to the localization function `l` and consume it as part of your string
-  ```typescript
-  l('id-with-params', { param: 'value' })
-  ```
+- **Lightweight** - No dependencies and minimal functionality.
+- **Dev friendly** - Uses types (and soon lint rules) to catch issues during development.
+- **Flexible** - You choose how to group your messages and when to load them.
+- **Self-contained** - No macros or CLI tools to run or configure.
 
 ## When not to use NanoI18n?
 
-- **Non TS/JS code base** - NanoI18n is built to work with TS/JS. While tooling could be built to tranform the TS messages files into some other format supported by other languages, it is beyond the scope of this project.
-- **Project requires the framework to do the formatting** - Most I18n frameworks support the ICU format which use specially formatted messages in order to localize things like plurals, number formats, dates, etc. NanoI18n assumes that you will provide pre-formatted data to the parameterized messages.
+- **Non TS code base** - The value of NanoI18n comes through when using types for validation.
+- **Require localization of special values done by framework** - Most I18n frameworks support the ICU format which uses specially formatted messages in order to localize things like plurals, number formats, dates, etc. NanoI18n assumes that you will provide pre-formatted data to the parameterized messages.
 
-## Next work
+## Next
 
 We will be adding support for:
 
@@ -47,13 +36,13 @@ We will be adding support for:
 
 ### Basic Usage
 
-1. Create your file(s) containing your localized messages
+1. Create the file(s) containing the localized messages
 
    ```typescript
    // messages.en.ts
    export const messages = {
-     hi: 'hi!',
-     'hi-with-name': ({ name }: Readonly<{ name: string }>): string =>
+     'component.hi': () => 'hi!',
+     'component.hi-with-name': ({ fullName }: { fullName: string }) =>
        `hi ${a}!`,
    }
    ```
@@ -61,40 +50,45 @@ We will be adding support for:
    ```typescript
    // messages.es.ts
    export const messages = {
-     hi: '¡hola!',
-     'hi-with-name': ({ name }: Readonly<{ name: string }>): string =>
+     'component.hi': () => '¡hola!',
+     'component.hi-with-name': ({ fullName }: { fullName: string }) =>
        `¡hola = ${a}!`,
    }
    ```
 
-2. Export the localization `l` function generator
+2. Export the localization messages loader
 
    ```typescript
    // messages.ts
    import type { messages as enMessages } from './messages.en.js'
    import type { messages as esMessages } from './messages.es.js'
    import type { NanoI18nL10nImporters } from '@nanoi18n/core'
-   import { loadL10n } from '@nanoi18n/core'
+   import { loadMessages } from '@nanoi18n/core'
+
+   // This can be exported here or defined globally if used in multiple places
+   export enum Locale {
+     EN = 'en',
+     ES = 'es',
+   }
 
    // `importers` is used to dynamically import the required locale
 
-   // NOTE: Using the type as described here is important in order to get
-   //  TS errors for missing keys, different message types or mismatched
-   //  parameters.
+   // NOTE: Using the type as described here is important in order to get TS
+   //  errors for missing keys or mismatched message types.
    const importers: NanoI18nL10nImporters<
-     // Supported localed (can be an enum)
-     'en' | 'es',
-     // Types of messages (ideally the base language used during development)
-     typeof enMessages
+     // Supported locales
+     Locale,
+     // Types of messages (ensure to include all messages)
+     typeof enMessages & typeof esMessages
    > = {
-     ['en']: async () => (await import('./messages.en.js')).messages,
-     ['es']: async () => (await import('./messages.es.js')).messages,
+     [Locale.EN]: async () => (await import('./messages.en.js')).messages,
+     [Locale.ES]: async () => (await import('./messages.es.js')).messages,
    }
 
-   export const getLocalizer = async (locales: 'en' | 'es') => {
-     const l = await loadL10n(locale, importers)
+   export const getMessages = async (locales: Locale) => {
+     const m = await loadMessages(locale, importers)
 
-     return l
+     return m
    }
    ```
 
@@ -102,32 +96,17 @@ We will be adding support for:
 
    ```typescript
    // main.ts
-   import { getLocalizer } from '/.messages.js'
+   import { getMessages } from '/.messages.js'
 
    const doStuff = async () => {
-     const l = await getLocalizer('es')
+     const m = await getLocalizer('es')
 
-     console.log(l('hi'))
+     console.log(m['hi']())
      // Output: ¡Hola!
 
-     console.log(l('hi-with-name', { name: 'Daniela' }))
+     console.log(m['hi-with-name']({ name: 'Daniela' }))
      // Output: ¡Hola Daniela!
    }
 
    doStuff()
    ```
-
-### Runtime parameter check
-
-In order to ensure that all parameters are defined at runtime you can use the `paramCheck` helper (imported as `pc` below for conciseness) in your messages files. The helper goes through the listed params to ensure they are not undefined.
-
-Example:
-
-```typescript
-// messages.en.ts
-import { paramCheck as pc } from '@nanoi18n/core'
-
-export const messages = {
-  'hi-whit-name': ({ name }) => pc([name], `Hi ${name}!`),
-}
-```

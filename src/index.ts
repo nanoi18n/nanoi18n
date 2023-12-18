@@ -1,3 +1,2 @@
-export { loadL10n } from './loadL10n.js'
-export { paramCheck } from './paramCheck.js'
+export { loadMessages } from './loadMessages.js'
 export type * from './types.js'
