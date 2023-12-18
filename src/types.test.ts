@@ -1,10 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
 import { describe, expect, test } from 'vitest'
+import type { messages as enInvalid } from './__test__/messages-invalid.en.js'
+import type { messages as esInvalid } from './__test__/messages-invalid.es.js'
+import type { messages as enInvalid2 } from './__test__/messages-invalid2.en.js'
 import type { messages as enMixedParams } from './__test__/messages-mixed-params.en.js'
 import type { messages as esMixedParams } from './__test__/messages-mixed-params.es.js'
 import type { messages as esNoParams } from './__test__/messages-no-params.es.js'
 import type { messages as enParams } from './__test__/messages-params.en.js'
+import type { messages as esParams } from './__test__/messages-params.es.js'
 import type {
   NanoI18nL10nImporters,
   NanoI18nL10nMessageFunction,
@@ -261,7 +265,10 @@ describe('NanoI18nL10nImporters', () => {
     }
 
     // @ts-expect-error Expect error about missing 'ps' locale in importers
-    const importers: NanoI18nL10nImporters<Locale, typeof enParams> = {
+    const importers: NanoI18nL10nImporters<
+      Locale,
+      typeof enParams & typeof esParams
+    > = {
       ['en']: async () =>
         (await import('./__test__/messages-params.en.js')).messages,
       ['es']: async () =>
@@ -273,10 +280,38 @@ describe('NanoI18nL10nImporters', () => {
   })
 
   test('results in TS error when one of the message values is not a function', async () => {
-    // TODO: Implement
+    enum Locale {
+      EN = 'en',
+      ES = 'es',
+    }
+
+    const importers: NanoI18nL10nImporters<
+      Locale,
+      // @ts-expect-error error about a.1 being string instead of a function
+      typeof enInvalid & typeof esInvalid
+    > = {
+      ['en']: async () =>
+        (await import('./__test__/messages-invalid.en.js')).messages,
+      ['es']: async () =>
+        (await import('./__test__/messages-invalid.es.js')).messages,
+    }
+
+    // NOTE: Added only to avoid no-unused-var error
+    expect(importers).not.toBeUndefined()
   })
 
   test('results in TS error when one of the message values is a function with too many parameters', async () => {
-    // TODO: Implement
+    enum Locale {
+      EN = 'en',
+    }
+
+    // @ts-expect-error error about a.1 having too many arguments (only 1 expected)
+    const importers: NanoI18nL10nImporters<Locale, typeof enInvalid2> = {
+      ['en']: async () =>
+        (await import('./__test__/messages-invalid2.en.js')).messages,
+    }
+
+    // NOTE: Added only to avoid no-unused-var error
+    expect(importers).not.toBeUndefined()
   })
 })
